@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pzcrowdfunding15-member-pay-consumer" />
+        <module name="pzcrowdfunding10-member-mysql-provider" />
+        <module name="pzcrowdfunding11-member-redis-provider" />
+        <module name="pzcrowdfunding09-member-entity" />
+        <module name="pzcrowdfunding08-member-eureka" />
+        <module name="pzcrowdfunding12-member-authentication-consumer" />
+        <module name="pzcrowdfunding13-member-project-consumer" />
+        <module name="pzcrowdfunding16-member-zuul" />
+        <module name="pzcrowdfunding17-member-api" />
+        <module name="pzcrowdfunding14-member-order-consumer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pzcrowdfunding-member-eureka" target="14" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

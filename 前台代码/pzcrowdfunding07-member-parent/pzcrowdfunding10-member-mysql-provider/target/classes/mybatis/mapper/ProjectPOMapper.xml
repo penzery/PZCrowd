@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pz.crowd.mapper.ProjectPOMapper">
+
+
+  <resultMap id="DetailProjectVOMap" type="com.pz.crowd.entity.vo.DetailProjectVO">
+    <id column="project_id" property="projectId"/>
+    <result column="project_name" property="projectName"/>
+    <result column="project_description" property="projectDescription"/>
+    <result column="project_follower" property="projectFollower"/>
+    <result column="project_funding_money" property="projectFundingMoney"/>
+    <result column="project_support_money" property="projectSupportMoney"/>
+    <result column="project_completion" property="projectCompletion"/>
+    <result column="project_deploydate" property="projectDeployDate"/>
+    <result column="project_supporter" property="projectSupporter"/>
+    <result column="project_header_img_path" property="projectHeaderImgPath"/>
+    <collection property="projectDetailedImgPathList" ofType="java.lang.String" column="project_id" select="com.pz.crowd.mapper.ProjectPOMapper.selectProjectDetailedImgPathList"/>
+    <collection property="detailReturnVOList" ofType="com.pz.crowd.entity.vo.DetailReturnVO" column="project_id" select="com.pz.crowd.mapper.ProjectReturnInfoPOMapper.selectDetailReturnVOList"/>
+  </resultMap>
+
+
+
+  <select id="selectDetailProjectVO" resultMap="DetailProjectVOMap">
+    select project_id,project_name,project_description,project_follower,project_funding_money,project_support_money,project_completion,project_deploydate,project_supporter,project_header_img_path from t_project where project_id=#{projectId}
+  </select>
+
+  <select id="selectProjectDetailedImgPathList" resultType="java.lang.String">
+    select img_path from t_project_detailed_img where project_id=#{project_id}
+  </select>
+
+
+
+
+  <resultMap id="PortalProjectTypeVOResultMap" type="com.pz.crowd.entity.vo.PortalProjectTypeVO">
+    <id column="type_id" property="typeId"/>
+    <result column="type_name" property="typeName"/>
+    <result column="type_remark" property="typeRemark"/>
+    <collection property="projectVOList" ofType="com.pz.crowd.entity.vo.PortalProjectVO" column="type_id" select="com.pz.crowd.mapper.ProjectPOMapper.selectPortalProjectVOList"/>
+  </resultMap>
+
+  <select id="selectPortalProjectTypeVOList" resultMap="PortalProjectTypeVOResultMap">
+    select type_id,type_name,type_remark from t_project_type
+  </select>
+
+  <select id="selectPortalProjectVOList" resultType="com.pz.crowd.entity.vo.PortalProjectVO">
+    select t_project.project_id projectId,project_name projectName,project_header_img_path projectHeaderImgPath,project_deploydate projectDeploydate,project_funding_money projectFundingMoney,project_completion projectCompletion,project_supporter projectSupporter from t_project inner join t_inner_project_type on t_inner_project_type.project_id=t_project.project_id where t_inner_project_type.type_id=#{type_id} order by t_project.project_id desc limit 0,4
+  </select>
+
+
+
+  <resultMap id="BaseResultMap" type="com.pz.crowd.entity.po.ProjectPO">
+    <id column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_description" jdbcType="VARCHAR" property="projectDescription" />
+    <result column="project_funding_money" jdbcType="BIGINT" property="projectFundingMoney" />
+    <result column="project_funding_day" jdbcType="INTEGER" property="projectFundingDay" />
+    <result column="project_header_img_path" jdbcType="VARCHAR" property="projectHeaderImgPath" />
+    <result column="project_status" jdbcType="INTEGER" property="projectStatus" />
+    <result column="project_deploydate" jdbcType="TIMESTAMP" property="projectDeploydate" />
+    <result column="project_support_money" jdbcType="BIGINT" property="projectSupportMoney" />
+    <result column="project_supporter" jdbcType="INTEGER" property="projectSupporter" />
+    <result column="project_completion" jdbcType="INTEGER" property="projectCompletion" />
+    <result column="project_member_id" jdbcType="BIGINT" property="projectMemberId" />
+    <result column="project_createdate" jdbcType="TIMESTAMP" property="projectCreatedate" />
+    <result column="project_follower" jdbcType="INTEGER" property="projectFollower" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    project_id, project_name, project_description, project_funding_money, project_funding_day, 
+    project_header_img_path, project_status, project_deploydate, project_support_money, 
+    project_supporter, project_completion, project_member_id, project_createdate, project_follower
+  </sql>
+  <select id="selectByExample" parameterType="com.pz.crowd.entity.po.ProjectPOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pz.crowd.entity.po.ProjectPOExample">
+    delete from t_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insertProjectTypeRelationship">
+    insert into t_inner_project_type(project_id,type_id) values 
+    <foreach collection="typeIdList" item="typeId" separator=",">
+      (#{projectId},#{typeId})
+    </foreach>
+  </insert>
+
+  <insert id="insertProjectTagRelationship">
+    insert into t_inner_project_tag(project_id,tag_id) values
+    <foreach collection="tagIdList" item="tagId" separator=",">
+      (#{projectId},#{tagId})
+    </foreach>
+  </insert>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="projectId" parameterType="com.pz.crowd.entity.po.ProjectPO">
+    insert into t_project (project_id, project_name, project_description, 
+      project_funding_money, project_funding_day, 
+      project_header_img_path, project_status, project_deploydate, 
+      project_support_money, project_supporter, project_completion, 
+      project_member_id, project_createdate, project_follower
+      )
+    values (#{projectId,jdbcType=BIGINT}, #{projectName,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
+      #{projectFundingMoney,jdbcType=BIGINT}, #{projectFundingDay,jdbcType=INTEGER}, 
+      #{projectHeaderImgPath,jdbcType=VARCHAR}, #{projectStatus,jdbcType=INTEGER}, #{projectDeploydate,jdbcType=TIMESTAMP}, 
+      #{projectSupportMoney,jdbcType=BIGINT}, #{projectSupporter,jdbcType=INTEGER}, #{projectCompletion,jdbcType=INTEGER}, 
+      #{projectMemberId,jdbcType=BIGINT}, #{projectCreatedate,jdbcType=TIMESTAMP}, #{projectFollower,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="projectId" parameterType="com.pz.crowd.entity.po.ProjectPO">
+    insert into t_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectDescription != null">
+        project_description,
+      </if>
+      <if test="projectFundingMoney != null">
+        project_funding_money,
+      </if>
+      <if test="projectFundingDay != null">
+        project_funding_day,
+      </if>
+      <if test="projectHeaderImgPath != null">
+        project_header_img_path,
+      </if>
+      <if test="projectStatus != null">
+        project_status,
+      </if>
+      <if test="projectDeploydate != null">
+        project_deploydate,
+      </if>
+      <if test="projectSupportMoney != null">
+        project_support_money,
+      </if>
+      <if test="projectSupporter != null">
+        project_supporter,
+      </if>
+      <if test="projectCompletion != null">
+        project_completion,
+      </if>
+      <if test="projectMemberId != null">
+        project_member_id,
+      </if>
+      <if test="projectCreatedate != null">
+        project_createdate,
+      </if>
+      <if test="projectFollower != null">
+        project_follower,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null">
+        #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectFundingMoney != null">
+        #{projectFundingMoney,jdbcType=BIGINT},
+      </if>
+      <if test="projectFundingDay != null">
+        #{projectFundingDay,jdbcType=INTEGER},
+      </if>
+      <if test="projectHeaderImgPath != null">
+        #{projectHeaderImgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="projectDeploydate != null">
+        #{projectDeploydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectSupportMoney != null">
+        #{projectSupportMoney,jdbcType=BIGINT},
+      </if>
+      <if test="projectSupporter != null">
+        #{projectSupporter,jdbcType=INTEGER},
+      </if>
+      <if test="projectCompletion != null">
+        #{projectCompletion,jdbcType=INTEGER},
+      </if>
+      <if test="projectMemberId != null">
+        #{projectMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="projectCreatedate != null">
+        #{projectCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectFollower != null">
+        #{projectFollower,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pz.crowd.entity.po.ProjectPOExample" resultType="java.lang.Long">
+    select count(*) from t_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project
+    <set>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectDescription != null">
+        project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectFundingMoney != null">
+        project_funding_money = #{record.projectFundingMoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectFundingDay != null">
+        project_funding_day = #{record.projectFundingDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectHeaderImgPath != null">
+        project_header_img_path = #{record.projectHeaderImgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStatus != null">
+        project_status = #{record.projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectDeploydate != null">
+        project_deploydate = #{record.projectDeploydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectSupportMoney != null">
+        project_support_money = #{record.projectSupportMoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectSupporter != null">
+        project_supporter = #{record.projectSupporter,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectCompletion != null">
+        project_completion = #{record.projectCompletion,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectMemberId != null">
+        project_member_id = #{record.projectMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectCreatedate != null">
+        project_createdate = #{record.projectCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectFollower != null">
+        project_follower = #{record.projectFollower,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project
+    set project_id = #{record.projectId,jdbcType=BIGINT},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      project_funding_money = #{record.projectFundingMoney,jdbcType=BIGINT},
+      project_funding_day = #{record.projectFundingDay,jdbcType=INTEGER},
+      project_header_img_path = #{record.projectHeaderImgPath,jdbcType=VARCHAR},
+      project_status = #{record.projectStatus,jdbcType=INTEGER},
+      project_deploydate = #{record.projectDeploydate,jdbcType=TIMESTAMP},
+      project_support_money = #{record.projectSupportMoney,jdbcType=BIGINT},
+      project_supporter = #{record.projectSupporter,jdbcType=INTEGER},
+      project_completion = #{record.projectCompletion,jdbcType=INTEGER},
+      project_member_id = #{record.projectMemberId,jdbcType=BIGINT},
+      project_createdate = #{record.projectCreatedate,jdbcType=TIMESTAMP},
+      project_follower = #{record.projectFollower,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pz.crowd.entity.po.ProjectPO">
+    update t_project
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null">
+        project_description = #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectFundingMoney != null">
+        project_funding_money = #{projectFundingMoney,jdbcType=BIGINT},
+      </if>
+      <if test="projectFundingDay != null">
+        project_funding_day = #{projectFundingDay,jdbcType=INTEGER},
+      </if>
+      <if test="projectHeaderImgPath != null">
+        project_header_img_path = #{projectHeaderImgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        project_status = #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="projectDeploydate != null">
+        project_deploydate = #{projectDeploydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectSupportMoney != null">
+        project_support_money = #{projectSupportMoney,jdbcType=BIGINT},
+      </if>
+      <if test="projectSupporter != null">
+        project_supporter = #{projectSupporter,jdbcType=INTEGER},
+      </if>
+      <if test="projectCompletion != null">
+        project_completion = #{projectCompletion,jdbcType=INTEGER},
+      </if>
+      <if test="projectMemberId != null">
+        project_member_id = #{projectMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="projectCreatedate != null">
+        project_createdate = #{projectCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectFollower != null">
+        project_follower = #{projectFollower,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pz.crowd.entity.po.ProjectPO">
+    update t_project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_description = #{projectDescription,jdbcType=VARCHAR},
+      project_funding_money = #{projectFundingMoney,jdbcType=BIGINT},
+      project_funding_day = #{projectFundingDay,jdbcType=INTEGER},
+      project_header_img_path = #{projectHeaderImgPath,jdbcType=VARCHAR},
+      project_status = #{projectStatus,jdbcType=INTEGER},
+      project_deploydate = #{projectDeploydate,jdbcType=TIMESTAMP},
+      project_support_money = #{projectSupportMoney,jdbcType=BIGINT},
+      project_supporter = #{projectSupporter,jdbcType=INTEGER},
+      project_completion = #{projectCompletion,jdbcType=INTEGER},
+      project_member_id = #{projectMemberId,jdbcType=BIGINT},
+      project_createdate = #{projectCreatedate,jdbcType=TIMESTAMP},
+      project_follower = #{projectFollower,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </update>
+</mapper>

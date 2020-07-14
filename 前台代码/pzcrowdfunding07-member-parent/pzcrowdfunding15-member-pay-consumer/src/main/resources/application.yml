@@ -1,0 +1,16 @@
+server:
+  port: 28007
+spring:
+  application:
+    name: pz-crowd-pay
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: localhost
+  session:
+    store-type: redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka

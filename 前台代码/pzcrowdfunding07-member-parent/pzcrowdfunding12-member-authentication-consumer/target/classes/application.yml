@@ -1,0 +1,16 @@
+server:
+  port: 28004
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka
+spring:
+  application:
+    name: pz-crowd-authentication
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: localhost
+  session:
+    store-type: redis

@@ -1,0 +1,23 @@
+server:
+  port: 28005
+spring:
+  application:
+    name: pz-crowd-project
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: localhost
+  session:
+    store-type: redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka
+aliyun:
+  oss:
+    access-key-id: LTAI4GBMadC2Zh4J5mdGccwt
+    access-key-secret: oug0F3LonsTQZbn5TIAnwwOf2wpXJL
+    bucket-domain: http://pzcrowd.oss-cn-qingdao.aliyuncs.com
+    bucket-name: pzcrowd
+    end-point: http://oss-cn-qingdao.aliyuncs.com

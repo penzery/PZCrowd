@@ -1,0 +1,11 @@
+server:
+  port: 28003
+spring:
+  application:
+    name: pz-crowd-redis
+  redis:
+    host: localhost
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka

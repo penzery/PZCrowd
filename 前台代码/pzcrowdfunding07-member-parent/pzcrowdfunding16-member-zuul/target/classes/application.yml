@@ -1,0 +1,29 @@
+server:
+  port: 800
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka
+spring:
+  application:
+    name: pz-crowd-zuul
+  redis:
+    host: localhost
+  session:
+    store-type: redis
+zuul:
+  routes:
+    crowd-portal:
+      service-id: pz-crowd-authentication
+      path: /**
+    crowd-project:
+      service-id: pz-crowd-project
+      path: /project/**
+    crowd-order:
+      service-id: pz-crowd-order
+      path: /order/**
+    crowd-pay:
+      service-id: pz-crowd-pay
+      path: /pay/**
+  ignored-services: '*'
+  sensitive-headers: '*'

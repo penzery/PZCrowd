@@ -1,0 +1,21 @@
+server:
+  port: 28002
+spring:
+  application:
+    name: pz-crowd-mysql
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: penzher0809
+    url: jdbc:mysql://localhost:3306/db_pz_crowd_funding?useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:28001/eureka
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+logging:
+  level:
+    com.pz.crowd.test: debug
+    com.pz.crowd.mapper: debug

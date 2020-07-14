@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pz.crowd.mapper.ProjectLaunchMemberInfoPOMapper">
+  <resultMap id="BaseResultMap" type="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="member_self_description_simple" jdbcType="VARCHAR" property="memberSelfDescriptionSimple" />
+    <result column="member_self_description_detail" jdbcType="VARCHAR" property="memberSelfDescriptionDetail" />
+    <result column="member_phone_number" jdbcType="VARCHAR" property="memberPhoneNumber" />
+    <result column="service_phone_num" jdbcType="VARCHAR" property="servicePhoneNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, project_id, member_id, member_self_description_simple, member_self_description_detail, 
+    member_phone_number, service_phone_num
+  </sql>
+  <select id="selectByExample" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_launch_member_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_launch_member_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_launch_member_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPOExample">
+    delete from t_project_launch_member_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPO">
+    insert into t_project_launch_member_info (id, project_id, member_id, 
+      member_self_description_simple, member_self_description_detail, 
+      member_phone_number, service_phone_num)
+    values (#{id,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, 
+      #{memberSelfDescriptionSimple,jdbcType=VARCHAR}, #{memberSelfDescriptionDetail,jdbcType=VARCHAR}, 
+      #{memberPhoneNumber,jdbcType=VARCHAR}, #{servicePhoneNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPO">
+    insert into t_project_launch_member_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="memberSelfDescriptionSimple != null">
+        member_self_description_simple,
+      </if>
+      <if test="memberSelfDescriptionDetail != null">
+        member_self_description_detail,
+      </if>
+      <if test="memberPhoneNumber != null">
+        member_phone_number,
+      </if>
+      <if test="servicePhoneNum != null">
+        service_phone_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="memberSelfDescriptionSimple != null">
+        #{memberSelfDescriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="memberSelfDescriptionDetail != null">
+        #{memberSelfDescriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhoneNumber != null">
+        #{memberPhoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhoneNum != null">
+        #{servicePhoneNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPOExample" resultType="java.lang.Long">
+    select count(*) from t_project_launch_member_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_launch_member_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberSelfDescriptionSimple != null">
+        member_self_description_simple = #{record.memberSelfDescriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberSelfDescriptionDetail != null">
+        member_self_description_detail = #{record.memberSelfDescriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberPhoneNumber != null">
+        member_phone_number = #{record.memberPhoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicePhoneNum != null">
+        service_phone_num = #{record.servicePhoneNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_launch_member_info
+    set id = #{record.id,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      member_id = #{record.memberId,jdbcType=BIGINT},
+      member_self_description_simple = #{record.memberSelfDescriptionSimple,jdbcType=VARCHAR},
+      member_self_description_detail = #{record.memberSelfDescriptionDetail,jdbcType=VARCHAR},
+      member_phone_number = #{record.memberPhoneNumber,jdbcType=VARCHAR},
+      service_phone_num = #{record.servicePhoneNum,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPO">
+    update t_project_launch_member_info
+    <set>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="memberSelfDescriptionSimple != null">
+        member_self_description_simple = #{memberSelfDescriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="memberSelfDescriptionDetail != null">
+        member_self_description_detail = #{memberSelfDescriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhoneNumber != null">
+        member_phone_number = #{memberPhoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhoneNum != null">
+        service_phone_num = #{servicePhoneNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pz.crowd.entity.po.ProjectLaunchMemberInfoPO">
+    update t_project_launch_member_info
+    set project_id = #{projectId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=BIGINT},
+      member_self_description_simple = #{memberSelfDescriptionSimple,jdbcType=VARCHAR},
+      member_self_description_detail = #{memberSelfDescriptionDetail,jdbcType=VARCHAR},
+      member_phone_number = #{memberPhoneNumber,jdbcType=VARCHAR},
+      service_phone_num = #{servicePhoneNum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
