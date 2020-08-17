@@ -21,3 +21,7 @@ aliyun:
     bucket-domain: http://pzcrowd.oss-cn-qingdao.aliyuncs.com
     bucket-name: pzcrowd
     end-point: http://oss-cn-qingdao.aliyuncs.com
+bloom:
+  filter:
+    expectSize: 10000
+    fpp: 0.001
