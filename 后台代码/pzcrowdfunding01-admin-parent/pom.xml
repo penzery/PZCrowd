@@ -16,7 +16,7 @@
 
     <properties>
         <pz.spring.version>5.2.5.RELEASE</pz.spring.version>
-        <pz.spring.security.version>5.3.1.RELEASE</pz.spring.security.version>
+        <pz.spring.security.version>5.3.9.RELEASE</pz.spring.security.version>
     </properties>
 
     <dependencyManagement>
